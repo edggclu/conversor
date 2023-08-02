@@ -5,6 +5,8 @@ import valores.grados.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -15,6 +17,7 @@ public class VentanaConversorTemp extends JFrame {
     
     JTextField caja;
     JTextField caja2;
+    JLabel divisaValor;
 
     public VentanaConversorTemp() {
         int width = 500;
@@ -41,7 +44,7 @@ public class VentanaConversorTemp extends JFrame {
 
     private void colocarElementos() {
         /************* LBAEL ABAJO DEL OUTPUT *************/
-        JLabel divisaValor = new JLabel();
+        divisaValor = new JLabel();
         divisaValor.setBounds(300, 130, 125, 20);
         panel.add(divisaValor);
 
@@ -95,6 +98,7 @@ public class VentanaConversorTemp extends JFrame {
         caja.setBounds(40, 100, 200, 30);
         caja.setEditable(true);;
         panel.add(caja);
+        eventoTeclado();
 
         /*********** OUTPUT  ***********/
         caja2 = new JTextField();
@@ -123,6 +127,37 @@ public class VentanaConversorTemp extends JFrame {
         aGrado.setBounds(250, 65, 140, 20);
         panel.add(aGrado);
         panel.add(aLabel);
+    }
+
+    private void eventoTeclado() {
+        KeyListener event = new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                int character = evt.getKeyChar();
+                if ((!(character >= 48 && character <= 57))
+                        && (character != KeyEvent.VK_BACK_SPACE)
+                        && (character != '.' || caja.getText().contains("."))) {
+                    evt.consume();
+                } 
+            }
+
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                int character = evt.getKeyChar();
+                if ((!(character >= 48 && character <= 57))
+                        && (character != KeyEvent.VK_BACK_SPACE)
+                        && (character != '.' || caja.getText().contains("."))) {
+                    evt.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {                
+            }
+
+        };
+        caja.addKeyListener(event);
     }
     
 }

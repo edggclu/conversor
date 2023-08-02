@@ -5,6 +5,8 @@ import valores.monedas.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
@@ -12,7 +14,7 @@ public class VentanaConversorMonedas extends JFrame {
     public JPanel panel;
     JComboBox<Object> deMoneda;
     JComboBox<Object> aMoneda;
-    
+
     JTextField caja;
     JTextField caja2;
 
@@ -93,16 +95,18 @@ public class VentanaConversorMonedas extends JFrame {
         /*********** INPUT  ***********/
         caja = new JTextField();
         caja.setBounds(40, 100, 200, 30);
-        caja.setEditable(true);;
+        caja.setEditable(true);
         panel.add(caja);
+        eventoTeclado();
+
 
         /*********** OUTPUT  ***********/
         caja2 = new JTextField();
         caja2.setBounds(250, 100, 200, 30);
-        caja2.setEditable(false);;
+        caja2.setEditable(false);
         panel.add(caja2);
     }
-    
+
     private void agregaOpciones() {
         String[] opciones = { "Dolar-USD", "Peso-MXN", "Peso-ARG", "Peso-COL", "Peso-CH", "Quetzal-GT", "Euro" };
 
@@ -124,8 +128,40 @@ public class VentanaConversorMonedas extends JFrame {
         panel.add(aMoneda);
         panel.add(aLabel);
     }
-    
+
+    private void eventoTeclado()  {
+        KeyListener event = new KeyListener(){
+
+            @Override
+            public void keyTyped(KeyEvent evt) {
+                int character = evt.getKeyChar();
+                if ((!(character >= 48 && character <=57))
+                && (character != KeyEvent.VK_BACK_SPACE)
+                && (character != '.' || caja.getText().contains("."))) {
+                    evt.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                int character = evt.getKeyChar();
+                if ((!(character >= 48 && character <=57))
+                && (character != KeyEvent.VK_BACK_SPACE)
+                && (character != '.' || caja.getText().contains("."))) {
+                    evt.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+            
+        };
+        caja.addKeyListener(event);
+    }
+
 }
+
 
             
 
