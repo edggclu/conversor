@@ -12,9 +12,6 @@ public class VentanaConversorMonedas extends JFrame {
     public JPanel panel;
     JComboBox<Object> deMoneda;
     JComboBox<Object> aMoneda;
-    Moneda dolar = new Moneda(1.0, "dolar");
-    Moneda pesoMXN = new Moneda(16.00, "pesoMXN");
-    Moneda pesoARG = new Moneda(500.0, "pesoARG");
     
     JTextField caja;
     JTextField caja2;
@@ -73,8 +70,8 @@ public class VentanaConversorMonedas extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ConversorDivi conversor = new ConversorDivi();
                 Double g = Double.parseDouble(caja.getText());
-                double respuesta = (conversor.convertir(deMoneda.getSelectedIndex(), aMoneda.getSelectedIndex(), g));
-                caja2.setText("$ " + Double.toString(respuesta));
+                String respuesta = (conversor.convertir(deMoneda.getSelectedIndex(), aMoneda.getSelectedIndex(), g));
+                caja2.setText("$ " + (respuesta));
                 divisaValor.setText(conversor.imprimirDivi(deMoneda.getSelectedIndex(), aMoneda.getSelectedIndex()));
             }
         });
@@ -108,7 +105,7 @@ public class VentanaConversorMonedas extends JFrame {
     
     private void agregaOpciones() {
         String[] opciones = { "Dolar-USD", "Peso-MXN", "Peso-ARG", "Peso-COL", "Peso-CH", "Quetzal-GT", "Euro" };
-        
+
         /*********** DE ***********/ //Moneda origen
         JLabel deLabel = new JLabel("De:");
         deLabel.setBounds(40, 48, 50, 20);
@@ -127,6 +124,7 @@ public class VentanaConversorMonedas extends JFrame {
         panel.add(aMoneda);
         panel.add(aLabel);
     }
+    
 }
 
             
